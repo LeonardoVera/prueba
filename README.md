@@ -6,6 +6,8 @@ Página básica con HTML, CSS y JavaScript, sin dependencias ni compilación.
 
 Abre `index.html` directamente en tu navegador.
 
+El botón muestra un saludo y aumenta un contador con cada clic. El contador comienza en cero y se reinicia al recargar la página.
+
 ## Archivos
 
 - `index.html`: estructura de la página.
@@ -23,7 +25,7 @@ npm test
 
 En PowerShell, si la política de ejecución bloquea `npm`, usa `npm.cmd ci` y `npm.cmd test`.
 
-Los tests usan los módulos nativos `node:test` y `node:assert`, sin dependencias externas. Comprueban el estado inicial del mensaje, el saludo al hacer clic y el comportamiento con clics repetidos. El DOM se simula con un doble mínimo; no son pruebas en un navegador real.
+Los tests usan los módulos nativos `node:test` y `node:assert`, sin dependencias externas. Comprueban el estado inicial del mensaje, el saludo al hacer clic, el comportamiento con clics repetidos, el incremento del contador y su reinicio al cargar de nuevo la página. El DOM se simula con un doble mínimo; no son pruebas en un navegador real.
 
 ## Integración continua
 
