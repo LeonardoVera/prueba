@@ -1,0 +1,12 @@
+{
+  "name": "proyecto-vanilla",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Página vanilla para practicar CI/CD.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

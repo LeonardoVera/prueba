@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests con Node.js
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@v6
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar tests
+        run: npm test
