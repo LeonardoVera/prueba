@@ -8,6 +8,12 @@ Abre `index.html` directamente en tu navegador.
 
 El botón muestra un saludo y aumenta un contador con cada clic. El contador comienza en cero y se reinicia al recargar la página.
 
+## Prueba de CI fallido: feature/feature2
+
+Esta rama agrega el botón **Reiniciar contador** con un fallo intencional: muestra cero, pero conserva el valor interno anterior. Después de dos clics, reiniciar y volver a hacer clic, muestra 3 en lugar de 1.
+
+El test `el primer clic después de reiniciar cuenta desde uno` verifica el comportamiento correcto y debe fallar. Por eso `npm test` devuelve un código de salida distinto de cero y el workflow de CI falla. Para corregirlo en una siguiente iteración, agrega `clicks = 0;` dentro del manejador del botón de reinicio.
+
 ## Archivos
 
 - `index.html`: estructura de la página.

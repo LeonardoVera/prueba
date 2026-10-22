@@ -7,11 +7,9 @@ const { runInNewContext } = require('node:vm');
 const source = readFileSync(resolve(__dirname, '../main.js'), 'utf8');
 
 // Doble mínimo del DOM: permite probar el script sin dependencias externas.
-function loadPage() {
-  const message = { textContent: '' };
-  const clickCount = { textContent: '0' };
+function createButton() {
   const listeners = new Map();
-  const button = {
+  return {
     addEventListener(event, handler) {
       listeners.set(event, handler);
     },
@@ -19,6 +17,13 @@ function loadPage() {
       listeners.get('click')?.();
     },
   };
+}
+
+function loadPage() {
+  const message = { textContent: '' };
+  const clickCount = { textContent: '0' };
+  const button = createButton();
+  const resetButton = createButton();
 
   runInNewContext(source, {
     document: {
@@ -27,12 +32,13 @@ function loadPage() {
           '#greeting-button': button,
           '#message': message,
           '#click-count': clickCount,
+          '#reset-button': resetButton,
         }[selector] ?? null;
       },
     },
   });
 
-  return { button, message, clickCount };
+  return { button, message, clickCount, resetButton };
 }
 
 test('el mensaje permanece vacío antes de hacer clic', () => {
@@ -85,4 +91,25 @@ test('cargar de nuevo la página reinicia el contador', () => {
   newPage.button.click();
   assert.equal(newPage.clickCount.textContent, '1');
   assert.equal(firstPage.clickCount.textContent, '1');
+});
+
+test('reiniciar el contador muestra cero', () => {
+  const { button, resetButton, clickCount } = loadPage();
+  button.click();
+  button.click();
+
+  resetButton.click();
+
+  assert.equal(clickCount.textContent, '0');
+});
+
+test('el primer clic después de reiniciar cuenta desde uno', () => {
+  const { button, resetButton, clickCount } = loadPage();
+  button.click();
+  button.click();
+  resetButton.click();
+
+  button.click();
+
+  assert.equal(clickCount.textContent, '1');
 });
